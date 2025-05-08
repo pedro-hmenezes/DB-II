@@ -1,2 +1,2 @@
 # DB-II
-Repositório contendo as atividades da matéria de Banco de Dados.  
+Repositório contendo as atividades práticas da disciplina de Banco de Dados.  
