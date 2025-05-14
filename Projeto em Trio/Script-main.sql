@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `EditoraAtlas`.`Exemplar` (
   `idExemplar` INT NOT NULL,
   `estado` VARCHAR(45) NOT NULL,
   `localizacao_Fisica` VARCHAR(90) NULL,
-  `dataFrabicacao` DATETIME NOT NULL,
+  `dataFabricacao` DATETIME NOT NULL,
   `Livro_isbn` VARCHAR(17) NOT NULL,
   PRIMARY KEY (`idExemplar`),
   INDEX `Livro_isbn_idx` (`Livro_isbn` ASC) VISIBLE,
