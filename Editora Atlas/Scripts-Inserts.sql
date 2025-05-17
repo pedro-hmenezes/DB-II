@@ -50,17 +50,17 @@ INSERT INTO PalavraChave (idPalavraChave, descricao) VALUES
 (10, 'Poesia Social');
 
 -- Inserts na tabela Exemplar
-INSERT INTO Exemplar (idExemplar, estadoLivro, localizacao_Fisica, dataFabricacao, Livro_isbn, idioma) VALUES
-(1, 'Novo', 'Estante A1', '2021-01-01', '9788535902774', 'Inglês'),
-(2, 'Usado - Bom', 'Estante B2', '2015-07-15', '9788535901784', 'Português'),
-(3, 'Novo', 'Estante C3', '2022-03-20', '9788572329793', 'Inglês'),
-(4, 'Usado - Regular', 'Estante D1', '2010-11-05', '9788582172760', 'Inglês'),
-(5, 'Novo', 'Estante E5', '2023-06-10', '9788535904877', 'Português'),
-(6, 'Usado - Bom', 'Estante F4', '2018-09-30', '9788572326655', 'Francês'),
-(7, 'Novo', 'Estante A2', '2022-01-01', '9788535930647', 'Português'),
-(8, 'Novo', 'Estante B3', '2023-02-28', '9788535929450', 'Inglês'),
-(9, 'Usado - Bom', 'Estante C1', '2019-08-15', '9788535914845', 'Inglês'),
-(10, 'Novo', 'Estante D2', '2023-05-10', '9788535933884', 'Português');
+INSERT INTO Exemplar (idExemplar, estadoLivro, localizacao_Fisica, dataFabricacao, Livro_isbn, qtdLivro, idioma) VALUES
+(1, 'Novo', 'Estante A1', '2021-01-01', '9788535902774', '7', 'Inglês'),
+(2, 'Usado - Bom', 'Estante B2', '2015-07-15', '9788535901784', '1', 'Português'),
+(3, 'Novo', 'Estante C3', '2022-03-20', '9788572329793', '3', 'Inglês'),
+(4, 'Usado - Regular', 'Estante D1', '2010-11-05', '9788582172760', '5', 'Inglês'),
+(5, 'Novo', 'Estante E5', '2023-06-10', '9788535904877', '13', 'Português'),
+(6, 'Usado - Bom', 'Estante F4', '2018-09-30', '9788572326655', '4','Francês'),
+(7, 'Novo', 'Estante A2', '2022-01-01', '9788535930647', '10','Português'),
+(8, 'Novo', 'Estante B3', '2023-02-28', '9788535929450', '8', 'Inglês'),
+(9, 'Usado - Bom', 'Estante C1', '2019-08-15', '9788535914845', '15', 'Inglês'),
+(10, 'Novo', 'Estante D2', '2023-05-10', '9788535933884', '9', 'Português');
 
 -- Inserts na tabela Cliente
 INSERT INTO Cliente (idCliente, nome, nomeFantasia, tipoCliente, telefone, email) VALUES

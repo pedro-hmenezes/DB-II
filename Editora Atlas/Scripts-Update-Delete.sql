@@ -48,7 +48,7 @@ update funcionario
 
 update pedido
 	set statusPedido = 'Expirado'
-		where dataPedido < '2024-01-31''23:59:00';
+		where dataPedido < '2024-01-31 23:59:00';
         
 update venda 
 	set desconto = 1.05

@@ -2,6 +2,9 @@ alter table areadeconhecimento
 	add column sigla varchar(10);
 
 alter table exemplar
+	add column qtdLivro int null;
+
+alter table exemplar
 	change column estado estadoLivro varchar(50) null;
 
 alter table exemplar

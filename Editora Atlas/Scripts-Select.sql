@@ -1,23 +1,63 @@
--- 1. Livros com mais de 200 páginas
-SELECT * FROM Livro WHERE numeroPagina > 200;
+-- 1. Livros com menos de 240 páginas
+select aut.nome as 'Nome do Autor',
+		liv.titulo as 'Título',
+		liv.numeroPagina as 'Número de Páginas'
+		from Livro liv
+			join LivroAutor la on liv.isbn = la.Livro_isbn
+			join Autor aut on la.Autor_idAutor = aut.idAutor
+				where liv.numeroPagina <= 240;
 
--- 2. Livros publicados antes do ano 2000
-SELECT * FROM Livro WHERE dataPublicacao < '2000-01-01';
+-- 2. Todas as palavras chaves associadas a livros
+select liv.titulo as 'Título do Livro',
+       pch.descricao as 'Palavra-chave'
+		from PalavraLivro pl
+			join PalavraChave pch on pl.PalavraChave_idPalavraChave = pch.idPalavraChave
+			join Livro liv on pl.Livro_isbn = liv.isbn
+				order by liv.titulo;
 
--- *3. Quantidade de livros do gênero 'Romance'
-SELECT COUNT(*) AS QuantidadeRomance FROM Livro WHERE genero = 'Romance';
+-- 3. Área de conhecimento pertencente a cada livro
+select liv.titulo as 'Título do Livro',
+       area.descricao as 'Área de Conhecimento'
+		from LivroArea la
+			join Livro liv on la.livro_isbn = liv.isbn
+			join AreaDeConhecimento area on la.AreaDeCon_codigoArea = area.codigoArea;
 
--- 4. Exemplares em estado 'Novo'
-SELECT * FROM Exemplar WHERE estadoLivro = 'Novo';
+-- 4. Quais livros estão em estado novo, sua localização física e sua quantidade no estoque
+select liv.titulo as 'Título do Livro',
+       ex.estadoLivro as 'Estado',
+       ex.localizacao_Fisica as 'Localização',
+       ex.qtdLivro as 'Quantidade em Estoque'
+		from Exemplar ex
+			join Livro liv on ex.Livro_isbn = liv.isbn
+			where ex.estadoLivro = 'Novo'
+				order by ex.qtdLivro asc;
 
--- 5. Quantidade de exemplares em português
-SELECT COUNT(*) AS QuantidadePortugues FROM Exemplar WHERE idioma = 'Português';
+-- 5. Funcionarios que recebem mais que a média salarial
+select fun.nome as 'Nome do Funcionário',
+       fun.salario as 'Salário'
+		from Funcionario fun
+			where fun.salario > (select avg(salario) from Funcionario)
+				order by fun.salario asc;
 
--- 6. Quantidade de exemplares em inglês
-SELECT COUNT(*) AS QuantidadeIngles FROM Exemplar WHERE idioma = 'Inglês';
+-- 6. Clientes e a quantidade de exemplares comprados
+select cli.nome as 'Nome do Cliente',
+       sum(ep.quantidade) as 'Total de Exemplares Comprados'
+		from Cliente cli
+			join Pedido ped on cli.idCliente = ped.Cliente_idCliente
+			join ExemplarPedido ep on ped.idPedido = ep.Pedido_idPedido
+				group by ep.Pedido_idPedido
+					order by sum(ep.quantidade);
 
--- 7. Quantidade de exemplares em francês
-SELECT COUNT(*) AS QuantidadeFrances FROM Exemplar WHERE idioma = 'Francês';
+-- 7. Clientes que compraram o livro usado - bom e usado - regular
+select cli.nome as 'Nome do Cliente',
+	   liv.titulo as 'Título do Livro',
+       ex.estadoLivro as 'Estado Livro'
+		from Cliente cli
+			join Pedido ped on cli.idCliente = ped.Cliente_idCliente
+			join ExemplarPedido ep on ped.idPedido = ep.Pedido_idPedido
+			join Exemplar ex on ep.Exemplar_idExemplar = ex.idExemplar
+			join Livro liv on ex.Livro_isbn = liv.isbn
+				where ex.estadoLivro in ('Usado - Bom', 'Usado - Regular');
 
 -- 8. Quanto foi usado de cada forma de pagamento
 select fpag.tipoPagamento as 'Forma de Pagamento',
@@ -77,10 +117,10 @@ select fun.nome as 'Nome da Funcionaria',
 select fun.nome as 'Nome Funcionario',
 		fun.estadoCivil as 'Estado Civil',
 		date_format(fun.dataNasc, '%d/%m/%Y') as 'Data de Nascimento'
-	from funcionario fun
-		join Funcionario func on fun.cpf = func.cpf
-			where func.dataNasc < '1985-01-01' 
-				and func.estadoCivil in ('Solteiro','Divorciado');
+		from funcionario fun
+			join Funcionario func on fun.cpf = func.cpf
+				where func.dataNasc < '1985-01-01' 
+					and func.estadoCivil in ('Solteiro','Divorciado');
 
 -- 16. Quais moram em Recife                
 select f.nome as 'Nome do Funcionário',
@@ -113,6 +153,7 @@ select aut.nome as 'Autor Brasileiro',
 -- 20 Livros no sistemas e suas quantidades                
 select liv.titulo as 'Título do Livro',
        exp.quantidade as 'Quantidade'
-    from ExemplarPedido exp
-      join Exemplar ex on exp.Exemplar_idExemplar = ex.idExemplar
-      join Livro liv on ex.Livro_isbn = liv.isbn;
+		from ExemplarPedido exp
+			join Exemplar ex on exp.Exemplar_idExemplar = ex.idExemplar
+			join Livro liv on ex.Livro_isbn = liv.isbn
+				order by exp.quantidade asc;
