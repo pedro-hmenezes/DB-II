@@ -1,7 +1,7 @@
 -- 1. Livros com menos de 240 páginas
 select aut.nome as 'Nome do Autor',
-		liv.titulo as 'Título',
-		liv.numeroPagina as 'Número de Páginas'
+	liv.titulo as 'Título',
+	liv.numeroPagina as 'Número de Páginas'
 		from Livro liv
 			join LivroAutor la on liv.isbn = la.Livro_isbn
 			join Autor aut on la.Autor_idAutor = aut.idAutor
@@ -50,8 +50,8 @@ select cli.nome as 'Nome do Cliente',
 
 -- 7. Clientes que compraram o livro usado - bom e usado - regular
 select cli.nome as 'Nome do Cliente',
-	   liv.titulo as 'Título do Livro',
-       ex.estadoLivro as 'Estado Livro'
+	liv.titulo as 'Título do Livro',
+	ex.estadoLivro as 'Estado Livro'
 		from Cliente cli
 			join Pedido ped on cli.idCliente = ped.Cliente_idCliente
 			join ExemplarPedido ep on ped.idPedido = ep.Pedido_idPedido
@@ -64,9 +64,9 @@ select fpag.tipoPagamento as 'Forma de Pagamento',
        (select COUNT(*) 
         from FormaDePag fpag2 
         where fpag2.tipoPagamento = fpag.tipoPagamento) as 'Total de Usos'
-			from FormaDePag fpag
-				group by fpag.tipoPagamento
-					order by 'Total de Usos' desc;
+		from FormaDePag fpag
+			group by fpag.tipoPagamento
+				order by 'Total de Usos' desc;
 
 -- 9. Vendas feitas abaixo de 100 reais
 select ved.idVenda as 'ID da Venda',
@@ -84,17 +84,17 @@ select loc.localizacao_Fisica as 'Localização do Livro'
 
 -- 11. Nome dos clientes físicos que são VIP
 select cli.nome as 'Nome do Cliente',
-		cli.tipoCliente as 'Tipo do Cliente'
-			from Pedido ped
-				join Cliente cli on ped.Cliente_idCliente = cli.idCliente
-					where cli.tipoCliente = 'VIP';
+	cli.tipoCliente as 'Tipo do Cliente'
+		from Pedido ped
+			join Cliente cli on ped.Cliente_idCliente = cli.idCliente
+				where cli.tipoCliente = 'VIP';
 
 -- 12. Nome dos clientes com pedidos apovados
 select cli.nome as 'Nome do Cliente',
 	ped.statusPedido as 'Situação do Pedido'
-        from Pedido ped
+        	from Pedido ped
 			join Cliente cli on ped.Cliente_idCliente = cli.idCliente
-                where ped.statusPedido = 'Aprovado';
+                		where ped.statusPedido = 'Aprovado';
                 
 -- 13. Clientes pj que não são de PE
 select cli.nome as 'Nome do Cliente',
@@ -106,17 +106,17 @@ select cli.nome as 'Nome do Cliente',
 
 -- 14. Mulheres que ganham mais de 2500
 select fun.nome as 'Nome da Funcionaria', 
-		fun.genero as 'Gênero',
-		fun.salario as 'Sálario'
+	fun.genero as 'Gênero',
+	fun.salario as 'Sálario'
 		from Funcionario fun
 			join Funcionario func on fun.cpf = func.cpf
 				where func.salario > 2500
-				  and func.genero = 'Feminino';
+					and func.genero = 'Feminino';
  
  -- 15. Funcionarios que tem menos de 40 anos e são solteiros e divorciados
 select fun.nome as 'Nome Funcionario',
-		fun.estadoCivil as 'Estado Civil',
-		date_format(fun.dataNasc, '%d/%m/%Y') as 'Data de Nascimento'
+	fun.estadoCivil as 'Estado Civil',
+	date_format(fun.dataNasc, '%d/%m/%Y') as 'Data de Nascimento'
 		from funcionario fun
 			join Funcionario func on fun.cpf = func.cpf
 				where func.dataNasc < '1985-01-01' 
