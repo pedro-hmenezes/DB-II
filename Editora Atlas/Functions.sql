@@ -137,7 +137,59 @@ delimiter ;
 -- Teste da função bonusDeSalario 
 select bonusDeSalario('000.111.222-33') as 'Aumento';
 
-    
+-- 05 VERIFICAR SE UM CLIENTE POSSUI COMPRAS REGISTRADAS
+delimiter $$
+create function clientePossuiCompras(p_idCliente int)
+returns varchar(100) deterministic
+begin
+    declare v_cliente_existe int;
+    declare v_qtd_vendas int;
+    declare v_nome_cliente varchar(60);
+
+    select count(*), max(nome) into v_cliente_existe, v_nome_cliente
+    from cliente
+    where idCliente = p_idCliente;
+
+    if v_cliente_existe = 0 then
+        return 'Cliente não encontrado.';
+    end if;
+
+    select count(*) into v_qtd_vendas
+    from venda
+    where cliente_idCliente = p_idCliente;
+
+    if v_qtd_vendas = 0 then
+        return concat('Cliente ', v_nome_cliente, ' não possui compras registradas.');
+    end if;
+
+    return concat('Cliente ', v_nome_cliente, ' possui ', v_qtd_vendas, ' compra(s) registrada(s).');
+end $$
+delimiter ;
+
+select clientePossuiCompras(6);
+
+-- 06 TOTAL DE CLIENTES POR CIDADE
+delimiter $$
+create function totalClientesCidade(p_cidade varchar(60))
+returns varchar(100) deterministic
+begin
+    declare v_total int;
+
+    select count(*) into v_total
+    from cliente cli
+    join pessoafisica pf on cli.idcliente = pf.cliente_idcliente
+    join enderecopf endp on pf.cpf = endp.pessoafisica_cpf
+    where endp.cidade = p_cidade;
+
+    if v_total = 0 then
+        return concat('Nenhum cliente encontrado em ', p_cidade, '.');
+    end if;
+
+    return concat('Total de clientes em ', p_cidade, ': ', v_total);
+end $$
+delimiter ;
+
+ select totalClientesCidade('São Paulo');   
     
     
     
